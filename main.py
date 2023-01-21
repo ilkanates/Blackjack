@@ -69,7 +69,7 @@ def win_check(hand):
 
 # Changes the value of the player's wallet according to their bet and game outcome
 
-def wallet(wallet_value, bet, x):
+def recalculate_wallet(wallet_value, bet, x):
     if x == "Player wins!":
         wallet_value += bet
     elif x == "Dealer wins" or "Player lose":
@@ -128,7 +128,7 @@ def blackjack():
             if win_check(player_hand) == True:
                 x = "Player wins!"
                 print(x)
-                wallet_value = wallet(wallet_value, bet, x)
+                wallet_value = recalculate_wallet(wallet_value, bet, x)
                 continue
             else:
                 while win_check(player_hand) == False:
@@ -147,7 +147,7 @@ def blackjack():
                             if win_check(player_hand) == True:
                                 x = "Player wins!"
                                 print(x)
-                                wallet_value = wallet(wallet_value, bet, x)
+                                wallet_value = recalculate_wallet(wallet_value, bet, x)
                                 sleep(0.5)
                                 break
                             elif lose_check(player_hand) == True and player_cards.count(11) > 0:
@@ -159,7 +159,7 @@ def blackjack():
                                 if lose_check(player_hand) == True:
                                     x = "Player lose"
                                     print(x)
-                                    wallet_value = wallet(wallet_value, bet, x)
+                                    wallet_value = recalculate_wallet(wallet_value, bet, x)
                                     sleep(0.5)
                                 else:
                                     continue
@@ -172,12 +172,12 @@ def blackjack():
                                 if lose_check(player_hand) == True:
                                     x = "Player lose"
                                     print(x)
-                                    wallet_value = wallet(wallet_value, bet, x)
+                                    wallet_value = recalculate_wallet(wallet_value, bet, x)
                                     sleep(0.5)
                                 elif win_check(player_hand) == True:
                                     x = "Player wins!"
                                     print(x)
-                                    wallet_value = wallet(wallet_value, bet, x)
+                                    wallet_value = recalculate_wallet(wallet_value, bet, x)
                                     sleep(0.5)
                                     break
                                 else:
@@ -185,7 +185,7 @@ def blackjack():
                             elif lose_check(player_hand) == True:
                                 x = "Player lose"
                                 print(x)
-                                wallet_value = wallet(wallet_value, bet, x)
+                                wallet_value = recalculate_wallet(wallet_value, bet, x)
                                 sleep(0.5)
                                 break
                             else:
@@ -205,14 +205,14 @@ def blackjack():
                             if (dealer_hand > player_hand) or (win_check(dealer_hand) == True):
                                 x = "Dealer wins"
                                 print(x)
-                                wallet_value = wallet(wallet_value, bet, x)
+                                wallet_value = recalculate_wallet(wallet_value, bet, x)
                                 sleep(0.5)
                                 break
 
                             elif dealer_hand > 16 and dealer_hand < player_hand:
                                 x = "Player wins!"
                                 print(x)
-                                wallet_value = wallet(wallet_value, bet, x)
+                                wallet_value = recalculate_wallet(wallet_value, bet, x)
                                 sleep(0.5)
                                 break
 
@@ -234,20 +234,20 @@ def blackjack():
                                     if win_check(dealer_hand) == True:
                                         x = "Dealer wins"
                                         print(x)
-                                        wallet_value = wallet(wallet_value, bet, x)
+                                        wallet_value = recalculate_wallet(wallet_value, bet, x)
                                         sleep(0.5)
                                         break
                                     elif lose_check(dealer_hand) == True:
                                         x = "Player wins!"
                                         print(x)
-                                        wallet_value = wallet(wallet_value, bet, x)
+                                        wallet_value = recalculate_wallet(wallet_value, bet, x)
                                         sleep(0.5)
                                         game_on = False
                                         break
                                     elif dealer_hand > player_hand:
                                         x = "Dealer wins"
                                         print(x)
-                                        wallet_value = wallet(wallet_value, bet, x)
+                                        wallet_value = recalculate_wallet(wallet_value, bet, x)
                                         sleep(0.5)
                                         break
                                     elif dealer_hand == player_hand and dealer_hand > 16:
@@ -258,7 +258,7 @@ def blackjack():
                                     elif player_hand > dealer_hand and dealer_hand > 16:
                                         x = "Player wins!"
                                         print(x)
-                                        wallet_value = wallet(wallet_value, bet, x)
+                                        wallet_value = recalculate_wallet(wallet_value, bet, x)
                                         sleep(0.5)
 
                                         break
