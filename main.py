@@ -79,16 +79,11 @@ def wallet(wallet_value, bet, x):
 
 # Error check function - takes input from player and validates it
 
-def bet_f(wallet_value):
+def ask_bet(wallet_value):
     while True:
-        try:
-            player_bet = input(f"Please enter bet. Your max bet allowed is  {wallet_value} dollars ")
+        player_bet = input(f"Please enter bet. Your max allowed bet is {wallet_value} dollars ")
+        if player_bet.isdigit() and int(player_bet) in range(1, wallet_value + 1):
             player_bet = int(player_bet)
-        except ValueError:
-            continue
-        else:
-            while not int(player_bet) in range(1,((wallet_value)+1)):
-                player_bet = input(f"Please enter bet. Your max bet allowed is  {wallet_value} dollars ")
             break
     return player_bet
 
@@ -102,7 +97,7 @@ def blackjack():
 
         if play_game == "y":
             print(f"You have {wallet_value} dollars in your wallet.")
-            bet = int(bet_f(wallet_value))
+            bet = int(ask_bet(wallet_value))
             player_hand = 0
             dealer_hand = 0
             player_cards = []
