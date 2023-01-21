@@ -31,9 +31,9 @@ class Card:
 # Prints the card visual on the screen
 
 def print_card(g):
-    shape = int((str(g[0])[2]).replace("H","1").replace("D","2").replace("C","3").replace("S","4"))
-    number = str(g[0])[3]+str(g[0])[4].replace("'","")
-    print_card = Card(number,shape)
+    shape = int((str(g)[2]).replace("H", "1").replace("D", "2").replace("C", "3").replace("S", "4"))
+    number = str(g)[3]+str(g)[4].replace("'", "")
+    print_card = Card(number, shape)
     print_card.print()
     return
 
@@ -115,15 +115,15 @@ def blackjack():
             dealer_hand = c[1] + d[1]
             print(f"You received")
             sleep(0.5)
-            print_card(a)
+            print_card(a[0])
             sleep(0.5)
-            print_card(b)
+            print_card(b[0])
             sleep(0.5)
             print(f"You have {player_hand} points")
             sleep(0.5)
             print(f"Dealer has")
             sleep(0.5)
-            print_card(c)
+            print_card(c[0])
             sleep(0.5)
 
             if win_check(player_hand) == True:
@@ -143,7 +143,7 @@ def blackjack():
                             player_hand += e[1]
                             print(f"You received")
                             sleep(0.5)
-                            print_card(e)
+                            print_card(e[0])
                             print(f"You have {player_hand} points")
                             sleep(0.5)
                             if win_check(player_hand) == True:
@@ -198,9 +198,9 @@ def blackjack():
                             sleep(0.5)
                             print(f"Dealer received")
                             sleep(0.5)
-                            print_card(c)
+                            print_card(c[0])
                             sleep(0.5)
-                            print_card(d)
+                            print_card(d[0])
                             sleep(0.5)
                             print(f"Dealer has {dealer_hand} points")
                             sleep(0.5)
@@ -230,7 +230,7 @@ def blackjack():
                                     dealer_hand += f[1]
                                     print(f"Dealer received")
                                     sleep(0.5)
-                                    print_card(f)
+                                    print_card(f[0])
                                     sleep(0.5)
                                     print(f"Dealer has {dealer_hand} points")
                                     sleep(0.5)
