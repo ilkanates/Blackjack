@@ -35,17 +35,20 @@ def print_card(g):
     number = str(g)[3]+str(g)[4].replace("'", "")
     print_card = Card(number, shape)
     print_card.print()
+    sleep(0.5)
     return
 
 # Picks a random card from the deck and matching value from the dictionary
 # Pops the chosen card from the deck
 
-def dealing(card_deck):
-    card = sample(card_deck,1)
+
+def deal_card(card_deck, cards):
+    card = sample(card_deck, 1)
     value = card_deck_dct[card[0]]
     card_index = card_deck.index(card[0])
     card_deck.pop(card_index)
-    return card,value
+    cards.append(value)
+    return card, value
 
 # Checks if hand is over 21
 
@@ -101,30 +104,26 @@ def blackjack():
             player_hand = 0
             dealer_hand = 0
             player_cards = []
+            dealer_cards = []
             x = ""
-            a = dealing(card_deck)
-            sleep(0.5)
-            b = dealing(card_deck)
-            sleep(0.5)
-            c = dealing(card_deck)
-            sleep(0.5)
-            d = dealing(card_deck)
-            player_cards.append(a[1])
-            player_cards.append(b[1])
-            player_hand = a[1] + b[1]
-            dealer_hand = c[1] + d[1]
             print(f"You received")
             sleep(0.5)
+            a = deal_card(card_deck, player_cards)
             print_card(a[0])
-            sleep(0.5)
+            player_hand += a[1]
+            b = deal_card(card_deck, player_cards)
+            player_hand += b[1]
             print_card(b[0])
-            sleep(0.5)
             print(f"You have {player_hand} points")
             sleep(0.5)
+
             print(f"Dealer has")
             sleep(0.5)
+            c = deal_card(card_deck, dealer_cards)
             print_card(c[0])
-            sleep(0.5)
+            dealer_hand += c[1]
+            d = deal_card(card_deck, dealer_cards)
+            dealer_hand += d[1]
 
             if win_check(player_hand) == True:
                 x = "Player wins!"
@@ -138,8 +137,7 @@ def blackjack():
                     elif x == "":
                         new_card = input("Do you want another card? Y/N ")
                         if new_card.lower() == "y":
-                            e = dealing(card_deck)
-                            player_cards.append(e[1])
+                            e = deal_card(card_deck, player_cards)
                             player_hand += e[1]
                             print(f"You received")
                             sleep(0.5)
@@ -226,12 +224,11 @@ def blackjack():
 
                             else:
                                 while dealer_hand <= 16:
-                                    f = dealing(card_deck)
+                                    f = deal_card(card_deck, dealer_cards)
                                     dealer_hand += f[1]
                                     print(f"Dealer received")
                                     sleep(0.5)
                                     print_card(f[0])
-                                    sleep(0.5)
                                     print(f"Dealer has {dealer_hand} points")
                                     sleep(0.5)
                                     if win_check(dealer_hand) == True:
