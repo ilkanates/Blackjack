@@ -100,9 +100,7 @@ def blackjack():
         card_deck = list(card_deck_dct.keys())
         play_game = input("Are you ready to play? Y/N? ")
 
-        if play_game.lower() == "":
-            continue
-        elif play_game.lower()[0] == "y":
+        if play_game.lower() == "y":
             print(f"You have {wallet_value} dollars in your wallet.")
             bet = int(bet_f(wallet_value))
             player_hand = 0
@@ -276,7 +274,7 @@ def blackjack():
                                         continue
                     else:
                         break
-        elif play_game.lower()[0] == "n":
+        elif play_game.lower() == "n":
             print("Bye")
             sleep(0.5)
             break
