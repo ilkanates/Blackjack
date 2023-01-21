@@ -12,7 +12,7 @@ card_deck_dct = {"H2": 2, "H3": 3, "H4": 4, "H5": 5, "H6": 6, "H7": 7, "H8": 8, 
     , "S2": 2, "S3": 3, "S4": 4, "S5": 5, "S6": 6, "S7": 7, "S8": 8, "S9": 9, "S10": 10, "SJ": 10, "SQ": 10, "SK": 10,
                  "SA": 11}
 
-# Thıs functıon takes key and value from the dıctıonary and creates a card vısual
+# This function takes key and value from the dictionary and creates a card visual
 
 class Card:
     def __init__(self,valuec,suit):
@@ -28,7 +28,7 @@ class Card:
         print(f'|    {self.valuec:>2} |')
         print('└───────┘')
 
-# Prınts the card vısual on the screen
+# Prints the card visual on the screen
 
 def print_card(g):
     shape = int((str(g[0])[2]).replace("H","1").replace("D","2").replace("C","3").replace("S","4"))
@@ -37,7 +37,7 @@ def print_card(g):
     print_card.print()
     return
 
-# Pıcks a random card from the deck and matchıng value from the dıctıonary
+# Picks a random card from the deck and matching value from the dictionary
 # Pops the chosen card from the deck
 
 def dealing(card_deck):
@@ -47,7 +47,7 @@ def dealing(card_deck):
     card_deck.pop(card_index)
     return card,value
 
-# Checks ıf hand ıs over 21
+# Checks if hand is over 21
 
 def lose_check(hand):
     if hand > 21:
@@ -55,7 +55,7 @@ def lose_check(hand):
     else:
         return False
 
-# Checks ıf hand ıs equal to 21
+# Checks if hand is equal to 21
 
 def win_check(hand):
     if hand == 21:
@@ -64,7 +64,7 @@ def win_check(hand):
         return False
 
 
-# Changes the value of the player's wallet accordıng to theır bet and game outcome
+# Changes the value of the player's wallet according to their bet and game outcome
 
 def wallet(wallet_value, bet, x):
     if x == "Player wins!":
@@ -72,12 +72,12 @@ def wallet(wallet_value, bet, x):
     elif x == "Dealer wins" or "Player lose":
         wallet_value -= bet
     else:
-        print("It's a draw. Wallet value unchanged.")
+        print("it's a draw. Wallet value unchanged.")
 
     print(f"You have {wallet_value} dollars in your wallet.")
     return wallet_value
 
-# Error check functıon - takes ınput from player and valıdates ıt
+# Error check function - takes input from player and validates it
 
 def bet_f(wallet_value):
     while True:
