@@ -8,8 +8,8 @@ card_deck_dct = {"H2": 2, "H3": 3, "H4": 4, "H5": 5, "H6": 6, "H7": 7, "H8": 8, 
                  "C2": 2, "C3": 3, "C4": 4, "C5": 5, "C6": 6, "C7": 7, "C8": 8, "C9": 9, "C10": 10, "CJ": 10, "CQ": 10, "CK": 10, "CA": 11,
                  "S2": 2, "S3": 3, "S4": 4, "S5": 5, "S6": 6, "S7": 7, "S8": 8, "S9": 9, "S10": 10, "SJ": 10, "SQ": 10, "SK": 10, "SA": 11}
 
-# This function takes key and value from the dictionary and creates a card visual
 
+# This function takes key and value from the dictionary and creates a card visual
 
 class Card:
     def __init__(self, value, suit):
@@ -25,8 +25,8 @@ class Card:
         print(f'|    {self.value:>2} |')
         print('└───────┘')
 
-# Prints the card visual on the screen
 
+# Prints the card visual on the screen
 
 def print_card(g):
     shape = int((str(g)[2]).replace("H", "1").replace("D", "2").replace("C", "3").replace("S", "4"))
@@ -36,9 +36,9 @@ def print_card(g):
     sleep(0.5)
     return
 
+
 # Picks a random card from the deck and matching value from the dictionary
 # Pops the chosen card from the deck
-
 
 def deal_card(card_deck, cards):
     card = sample(card_deck, 1)
@@ -48,15 +48,14 @@ def deal_card(card_deck, cards):
     cards.append(value)
     return card, value
 
-# Checks if hand is over 21
 
+# Checks if hand is over 21
 
 def lose_check(hand):
     return hand > 21
 
 
 # Checks if hand is equal to 21
-
 
 def win_check(hand):
     return hand == 21
@@ -75,8 +74,8 @@ def recalculate_wallet(wallet_value, bet, x):
     print(f"You have {wallet_value} dollars in your wallet.")
     return wallet_value
 
-# Error check function - takes input from player and validates it
 
+# Error check function - takes input from player and validates it
 
 def ask_bet(wallet_value):
     while True:
@@ -86,6 +85,8 @@ def ask_bet(wallet_value):
             break
     return player_bet
 
+
+# The Game
 
 def blackjack():
     wallet_value = 100
@@ -126,147 +127,131 @@ def blackjack():
                 print(x)
                 wallet_value = recalculate_wallet(wallet_value, bet, x)
                 continue
-            else:
-                while not win_check(player_hand):
-                    if x != "":
-                        break
-                    elif x == "":
-                        new_card = input("Do you want another card? Y/N ")
-                        if new_card.lower() == "y":
-                            e = deal_card(card_deck, player_cards)
-                            player_hand += e[1]
-                            print(f"You received")
-                            sleep(0.5)
-                            print_card(e[0])
-                            print(f"You have {player_hand} points")
-                            sleep(0.5)
-                            if win_check(player_hand):
-                                x = "Player wins!"
-                                print(x)
-                                wallet_value = recalculate_wallet(wallet_value, bet, x)
-                                sleep(0.5)
-                                break
-                            elif lose_check(player_hand) and player_cards.count(11) > 0:
-                                player_cards.pop(player_cards.index(11))
-                                player_cards.append(1)
-                                player_hand = player_hand - 10
-                                print(f"After recalculation you have {player_hand} points")
-                                sleep(0.5)
-                                if lose_check(player_hand):
-                                    x = "Player lose"
-                                    print(x)
-                                    wallet_value = recalculate_wallet(wallet_value, bet, x)
-                                    sleep(0.5)
-                                else:
-                                    continue
-                            elif lose_check(player_hand) and player_cards.count(11) > 0:
-                                player_cards.pop(player_cards.index(11))
-                                player_cards.append(1)
-                                player_hand = player_hand - 10
-                                print(f"After recalculation you have {player_hand} points")
-                                sleep(0.5)
-                                if lose_check(player_hand):
-                                    x = "Player lose"
-                                    print(x)
-                                    wallet_value = recalculate_wallet(wallet_value, bet, x)
-                                    sleep(0.5)
-                                elif win_check(player_hand):
-                                    x = "Player wins!"
-                                    print(x)
-                                    wallet_value = recalculate_wallet(wallet_value, bet, x)
-                                    sleep(0.5)
-                                    break
-                                else:
-                                    continue
-                            elif lose_check(player_hand):
-                                x = "Player lose"
-                                print(x)
-                                wallet_value = recalculate_wallet(wallet_value, bet, x)
-                                sleep(0.5)
-                                break
-                            else:
-                                continue
 
-                        elif new_card.lower() == "n":
-                            print("Dealers turn")
+            while not win_check(player_hand):
+                if x != "":
+                    break
+
+                new_card = input("Do you want another card? Y/N ")
+                if new_card.lower() == "y":
+                    e = deal_card(card_deck, player_cards)
+                    player_hand += e[1]
+                    print(f"You received")
+                    sleep(0.5)
+                    print_card(e[0])
+                    print(f"You have {player_hand} points")
+                    sleep(0.5)
+                    if win_check(player_hand):
+                        x = "Player wins!"
+                        print(x)
+                        wallet_value = recalculate_wallet(wallet_value, bet, x)
+                        sleep(0.5)
+                        break
+                    elif lose_check(player_hand) and player_cards.count(11) > 0:
+                        player_cards.pop(player_cards.index(11))
+                        player_cards.append(1)
+                        player_hand = player_hand - 10
+                        print(f"After recalculation you have {player_hand} points")
+                        sleep(0.5)
+                        if lose_check(player_hand):
+                            x = "Player lose"
+                            print(x)
+                            wallet_value = recalculate_wallet(wallet_value, bet, x)
                             sleep(0.5)
+                    elif lose_check(player_hand) and player_cards.count(11) > 0:
+                        player_cards.pop(player_cards.index(11))
+                        player_cards.append(1)
+                        player_hand = player_hand - 10
+                        print(f"After recalculation you have {player_hand} points")
+                        sleep(0.5)
+                        if lose_check(player_hand):
+                            x = "Player lose"
+                            print(x)
+                            wallet_value = recalculate_wallet(wallet_value, bet, x)
+                            sleep(0.5)
+                        elif win_check(player_hand):
+                            x = "Player wins!"
+                            print(x)
+                            wallet_value = recalculate_wallet(wallet_value, bet, x)
+                            sleep(0.5)
+                            break
+                    elif lose_check(player_hand):
+                        x = "Player lose"
+                        print(x)
+                        wallet_value = recalculate_wallet(wallet_value, bet, x)
+                        sleep(0.5)
+                        break
+                elif new_card.lower() == "n":
+                    print("Dealers turn")
+                    sleep(0.5)
+                    print(f"Dealer received")
+                    sleep(0.5)
+                    print_card(c[0])
+                    sleep(0.5)
+                    print_card(d[0])
+                    sleep(0.5)
+                    print(f"Dealer has {dealer_hand} points")
+                    sleep(0.5)
+                    if dealer_hand > player_hand or win_check(dealer_hand):
+                        x = "Dealer wins"
+                        print(x)
+                        wallet_value = recalculate_wallet(wallet_value, bet, x)
+                        sleep(0.5)
+                        break
+                    elif 16 < dealer_hand < player_hand:
+                        x = "Player wins!"
+                        print(x)
+                        wallet_value = recalculate_wallet(wallet_value, bet, x)
+                        sleep(0.5)
+                        break
+                    elif dealer_hand == player_hand and dealer_hand > 16:
+                        x = "Draw"
+                        print(x)
+                        sleep(0.5)
+                        break
+                    else:
+                        while dealer_hand <= 16:
+                            f = deal_card(card_deck, dealer_cards)
+                            dealer_hand += f[1]
                             print(f"Dealer received")
                             sleep(0.5)
-                            print_card(c[0])
-                            sleep(0.5)
-                            print_card(d[0])
-                            sleep(0.5)
+                            print_card(f[0])
                             print(f"Dealer has {dealer_hand} points")
                             sleep(0.5)
-                            if dealer_hand > player_hand or win_check(dealer_hand):
+                            if win_check(dealer_hand):
                                 x = "Dealer wins"
                                 print(x)
                                 wallet_value = recalculate_wallet(wallet_value, bet, x)
                                 sleep(0.5)
                                 break
-
-                            elif 16 < dealer_hand < player_hand:
+                            elif lose_check(dealer_hand):
                                 x = "Player wins!"
                                 print(x)
                                 wallet_value = recalculate_wallet(wallet_value, bet, x)
                                 sleep(0.5)
                                 break
-
+                            elif dealer_hand > player_hand:
+                                x = "Dealer wins"
+                                print(x)
+                                wallet_value = recalculate_wallet(wallet_value, bet, x)
+                                sleep(0.5)
+                                break
                             elif dealer_hand == player_hand and dealer_hand > 16:
                                 x = "Draw"
                                 print(x)
                                 sleep(0.5)
                                 break
-
-                            else:
-                                while dealer_hand <= 16:
-                                    f = deal_card(card_deck, dealer_cards)
-                                    dealer_hand += f[1]
-                                    print(f"Dealer received")
-                                    sleep(0.5)
-                                    print_card(f[0])
-                                    print(f"Dealer has {dealer_hand} points")
-                                    sleep(0.5)
-                                    if win_check(dealer_hand):
-                                        x = "Dealer wins"
-                                        print(x)
-                                        wallet_value = recalculate_wallet(wallet_value, bet, x)
-                                        sleep(0.5)
-                                        break
-                                    elif lose_check(dealer_hand):
-                                        x = "Player wins!"
-                                        print(x)
-                                        wallet_value = recalculate_wallet(wallet_value, bet, x)
-                                        sleep(0.5)
-                                        break
-                                    elif dealer_hand > player_hand:
-                                        x = "Dealer wins"
-                                        print(x)
-                                        wallet_value = recalculate_wallet(wallet_value, bet, x)
-                                        sleep(0.5)
-                                        break
-                                    elif dealer_hand == player_hand and dealer_hand > 16:
-                                        x = "Draw"
-                                        print(x)
-                                        sleep(0.5)
-                                        break
-                                    elif player_hand > dealer_hand > 16:
-                                        x = "Player wins!"
-                                        print(x)
-                                        wallet_value = recalculate_wallet(wallet_value, bet, x)
-                                        sleep(0.5)
-
-                                        break
-                                    else:
-                                        continue
-                    else:
-                        break
+                            elif player_hand > dealer_hand > 16:
+                                x = "Player wins!"
+                                print(x)
+                                wallet_value = recalculate_wallet(wallet_value, bet, x)
+                                sleep(0.5)
+                                break
         elif play_game == "n":
             print("Bye")
             sleep(0.5)
             break
-        else:
-            continue
+
 
 
 blackjack()
