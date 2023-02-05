@@ -86,6 +86,37 @@ def ask_bet(wallet_value):
     return player_bet
 
 
+def win_lose_check(bet, player_cards, player_hand, wallet_value):
+    status = "";
+    if win_check(player_hand):
+        status = "Player wins!"
+        print(status)
+        wallet_value = recalculate_wallet(wallet_value, bet, status)
+        sleep(0.5)
+    elif lose_check(player_hand) and player_cards.count(11) > 0:
+        player_cards.pop(player_cards.index(11))
+        player_cards.append(1)
+        player_hand = player_hand - 10
+        print(f"After recalculation you have {player_hand} points")
+        sleep(0.5)
+        if lose_check(player_hand):
+            status = "Player lose"
+            print(status)
+            wallet_value = recalculate_wallet(wallet_value, bet, status)
+            sleep(0.5)
+        elif win_check(player_hand):
+            status = "Player wins!"
+            print(status)
+            wallet_value = recalculate_wallet(wallet_value, bet, status)
+            sleep(0.5)
+    elif lose_check(player_hand):
+        status = "Player lose"
+        print(status)
+        wallet_value = recalculate_wallet(wallet_value, bet, status)
+        sleep(0.5)
+    return player_hand, wallet_value, status
+
+
 # The Game
 
 def blackjack():
@@ -141,45 +172,9 @@ def blackjack():
                     print_card(e[0])
                     print(f"You have {player_hand} points")
                     sleep(0.5)
-                    if win_check(player_hand):
-                        x = "Player wins!"
-                        print(x)
-                        wallet_value = recalculate_wallet(wallet_value, bet, x)
-                        sleep(0.5)
-                        break
-                    elif lose_check(player_hand) and player_cards.count(11) > 0:
-                        player_cards.pop(player_cards.index(11))
-                        player_cards.append(1)
-                        player_hand = player_hand - 10
-                        print(f"After recalculation you have {player_hand} points")
-                        sleep(0.5)
-                        if lose_check(player_hand):
-                            x = "Player lose"
-                            print(x)
-                            wallet_value = recalculate_wallet(wallet_value, bet, x)
-                            sleep(0.5)
-                    elif lose_check(player_hand) and player_cards.count(11) > 0:
-                        player_cards.pop(player_cards.index(11))
-                        player_cards.append(1)
-                        player_hand = player_hand - 10
-                        print(f"After recalculation you have {player_hand} points")
-                        sleep(0.5)
-                        if lose_check(player_hand):
-                            x = "Player lose"
-                            print(x)
-                            wallet_value = recalculate_wallet(wallet_value, bet, x)
-                            sleep(0.5)
-                        elif win_check(player_hand):
-                            x = "Player wins!"
-                            print(x)
-                            wallet_value = recalculate_wallet(wallet_value, bet, x)
-                            sleep(0.5)
-                            break
-                    elif lose_check(player_hand):
-                        x = "Player lose"
-                        print(x)
-                        wallet_value = recalculate_wallet(wallet_value, bet, x)
-                        sleep(0.5)
+
+                    player_hand, wallet_value, status = win_lose_check(bet, player_cards, player_hand, wallet_value)
+                    if status != "":
                         break
                 elif new_card.lower() == "n":
                     print("Dealers turn")
