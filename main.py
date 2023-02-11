@@ -37,6 +37,11 @@ def print_card(g):
     return
 
 
+def print_text(text):
+    print(f'{text}')
+    sleep(0.5)
+
+
 # Picks a random card from the deck and matching value from the dictionary
 # Pops the chosen card from the deck
 
@@ -71,9 +76,9 @@ def recalculate_wallet(wallet_value, bet, x):
     elif x == "Dealer wins" or "Player lose":
         wallet_value -= bet
     else:
-        print("it's a draw. Wallet value unchanged.")
+        print_text("it's a draw. Wallet value unchanged.")
 
-    print(f"You have {wallet_value} dollars in your wallet.")
+    print_text("You have {wallet_value} dollars in your wallet.")
     return wallet_value
 
 
@@ -94,30 +99,25 @@ def win_lose_check(bet, player_cards, player_hand, wallet_value):
         player_cards.pop(player_cards.index(11))
         player_cards.append(1)
         player_hand = player_hand - 10
-        print(f"After recalculation you have {player_hand} points")
-        sleep(0.5)
+        print_text("After recalculation you have {player_hand} points")
 
     if win_check(player_hand):
         status = "Player wins!"
-        print(status)
+        print_text(status)
         wallet_value = recalculate_wallet(wallet_value, bet, status)
-        sleep(0.5)
     elif lose_check(player_hand):
         status = "Player lose"
-        print(status)
+        print_text(status)
         wallet_value = recalculate_wallet(wallet_value, bet, status)
-        sleep(0.5)
     return player_hand, wallet_value, status
 
 
 def dealers_turn(card_deck, dealer_cards, dealer_hand, player_hand, status):
     while dealer_hand <= 16:
-        print(f"Dealer received")
-        sleep(0.5)
+        print_text("Dealer received")
         card_value = deal_card(card_deck, dealer_cards)
         dealer_hand += card_value
-        print(f"Dealer has {dealer_hand} points")
-        sleep(0.5)
+        print_text("Dealer has {dealer_hand} points")
         if lose_check(dealer_hand):
             status = "Player wins!"
             break
@@ -137,7 +137,8 @@ def blackjack():
         play_game = input("Are you ready to play? Y/N? ").lower()
 
         if play_game == "y":
-            print(f"You have {wallet_value} dollars in your wallet.")
+            print_text("You have {wallet_value} dollars in your wallet.")
+
             bet = int(ask_bet(wallet_value))
             player_hand = 0
             dealer_hand = 0
@@ -147,16 +148,14 @@ def blackjack():
             print(f"You received")
             sleep(0.5)
 
+            print_text("You received")
             card_value = deal_card(card_deck, player_cards)
             player_hand += card_value
             card_value = deal_card(card_deck, player_cards)
             player_hand += card_value
+            print_text("You have {player_hand} points")
 
-            print(f"You have {player_hand} points")
-            sleep(0.5)
-
-            print(f"Dealer has")
-            sleep(0.5)
+            print_text("Dealer has")
             card_value = deal_card(card_deck, dealer_cards)
             dealer_hand += card_value
             card_value = deal_card(card_deck, dealer_cards, False)
@@ -164,34 +163,27 @@ def blackjack():
 
             if win_check(player_hand):
                 status = "Player wins!"
-                print(status)
+                print_text(status)
                 wallet_value = recalculate_wallet(wallet_value, bet, status)
                 continue
 
             while True:
                 new_card = input("Do you want another card? Y/N ")
                 if new_card.lower() == "y":
-                    print(f"You received")
-                    sleep(0.5)
+                    print_text("You received")
                     card_value = deal_card(card_deck, player_cards)
                     player_hand += card_value
-                    print(f"You have {player_hand} points")
-                    sleep(0.5)
+                    print_text("You have {player_hand} points")
 
                     player_hand, wallet_value, status = win_lose_check(bet, player_cards, player_hand, wallet_value)
                     if status != "":
                         break
                 elif new_card.lower() == "n":
-                    print("Dealers turn")
-                    sleep(0.5)
-                    print(f"Dealer received")
-                    sleep(0.5)
+                    print_text("Dealers turn")
+                    print_text("Dealer received")
                     print_card(dealer_cards[0])
-                    sleep(0.5)
                     print_card(dealer_cards[1])
-                    sleep(0.5)
-                    print(f"Dealer has {dealer_hand} points")
-                    sleep(0.5)
+                    print_text("Dealer has {dealer_hand} points")
 
                     status = ""
                     if dealer_hand > player_hand or win_check(dealer_hand):
@@ -201,25 +193,23 @@ def blackjack():
                         dealer_hand, status = dealers_turn(card_deck, dealer_cards, dealer_hand, player_hand, status)
 
                     if status == "Dealer wins":
-                        print(status)
+                        print_text(status)
                         wallet_value = recalculate_wallet(wallet_value, bet, status)
                         sleep(0.5)
                         break
                     elif status == "Player wins!" or dealer_hand < player_hand:
                         status = "Player wins!"
-                        print(status)
+                        print_text(status)
                         wallet_value = recalculate_wallet(wallet_value, bet, status)
                         sleep(0.5)
                         break
                     elif dealer_hand == player_hand:
                         status = "Draw"
-                        print(status)
-                        sleep(0.5)
+                        print_text(status)
                         break
 
         elif play_game == "n":
-            print("Bye")
-            sleep(0.5)
+            print_text("Bye")
             break
 
 
