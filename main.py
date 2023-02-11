@@ -48,7 +48,7 @@ def deal_card(card_deck, cards, should_print=True):
     cards.append(value)
     if should_print:
         print_card(card)
-    return card, value
+    return value
 
 
 # Checks if hand is over 21
@@ -114,8 +114,8 @@ def dealers_turn(card_deck, dealer_cards, dealer_hand, player_hand, status):
     while dealer_hand <= 16:
         print(f"Dealer received")
         sleep(0.5)
-        f = deal_card(card_deck, dealer_cards)
-        dealer_hand += f[1]
+        card_value = deal_card(card_deck, dealer_cards)
+        dealer_hand += card_value
         print(f"Dealer has {dealer_hand} points")
         sleep(0.5)
         if lose_check(dealer_hand):
@@ -146,19 +146,21 @@ def blackjack():
             status = ""
             print(f"You received")
             sleep(0.5)
-            a = deal_card(card_deck, player_cards)
-            player_hand += a[1]
-            b = deal_card(card_deck, player_cards)
-            player_hand += b[1]
+
+            card_value = deal_card(card_deck, player_cards)
+            player_hand += card_value
+            card_value = deal_card(card_deck, player_cards)
+            player_hand += card_value
+
             print(f"You have {player_hand} points")
             sleep(0.5)
 
             print(f"Dealer has")
             sleep(0.5)
-            c = deal_card(card_deck, dealer_cards)
-            dealer_hand += c[1]
-            d = deal_card(card_deck, dealer_cards, False)
-            dealer_hand += d[1]
+            card_value = deal_card(card_deck, dealer_cards)
+            dealer_hand += card_value
+            card_value = deal_card(card_deck, dealer_cards, False)
+            dealer_hand += card_value
 
             if win_check(player_hand):
                 status = "Player wins!"
@@ -171,8 +173,8 @@ def blackjack():
                 if new_card.lower() == "y":
                     print(f"You received")
                     sleep(0.5)
-                    e = deal_card(card_deck, player_cards)
-                    player_hand += e[1]
+                    card_value = deal_card(card_deck, player_cards)
+                    player_hand += card_value
                     print(f"You have {player_hand} points")
                     sleep(0.5)
 
@@ -184,9 +186,9 @@ def blackjack():
                     sleep(0.5)
                     print(f"Dealer received")
                     sleep(0.5)
-                    print_card(c[0])
+                    print_card(dealer_cards[0])
                     sleep(0.5)
-                    print_card(d[0])
+                    print_card(dealer_cards[1])
                     sleep(0.5)
                     print(f"Dealer has {dealer_hand} points")
                     sleep(0.5)
