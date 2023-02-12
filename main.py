@@ -136,6 +136,9 @@ def blackjack():
 
     while True:
         card_deck = list(card_deck_dct.keys())
+        if wallet_value == 0:
+            print_text("You lose")
+            exit()
         play_game = input("Are you ready to play? Y/N? ").lower()
 
         if play_game == "y":
