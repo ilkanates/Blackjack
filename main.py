@@ -167,7 +167,7 @@ def blackjack():
             if win_check(player_hand):
                 status = "Player wins!"
                 print_text(status)
-                wallet_value = recalculate_wallet(wallet_value, bet, status)
+                wallet_value = recalculate_wallet(wallet_value, 1.5 * bet, status)
                 continue
 
             while True:
