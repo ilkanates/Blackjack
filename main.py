@@ -20,7 +20,7 @@ class Card:
         print('┌───────┐')
         print(f'| {self.value:<2}    |')
         print('|       |')
-        print(f'|  {self.suit}   |')
+        print(f'|   {self.suit}   |')
         print('|       |')
         print(f'|    {self.value:>2} |')
         print('└───────┘')
@@ -28,10 +28,7 @@ class Card:
 
 # Prints the card visual on the screen
 
-def print_card(g):
-    shape = int((str(g)[2]).replace("H", "1").replace("D", "2").replace("C", "3").replace("S", "4"))
-    number = str(g)[3]+str(g)[4].replace("'", "")
-    card = Card(number, shape)
+def print_card(card):
     card.print()
     sleep(0.5)
     return
@@ -47,10 +44,14 @@ def print_text(text):
 
 def deal_card(card_deck, cards, should_print=True):
     card = sample(card_deck, 1)
-    value = card_deck_dct[card[0]]
-    card_index = card_deck.index(card[0])
+    card = card[0]
+    value = card_deck_dct[card]
+    card_index = card_deck.index(card)
     card_deck.pop(card_index)
-    cards.append(value)
+    shape = int((str(card)[0]).replace("H", "1").replace("D", "2").replace("C", "3").replace("S", "4"))
+    number = card[1:]
+    card = Card(number, shape)
+    cards.append(card)
     if should_print:
         print_card(card)
     return value
@@ -78,7 +79,7 @@ def recalculate_wallet(wallet_value, bet, x):
     else:
         print_text("it's a draw. Wallet value unchanged.")
 
-    print_text("You have {wallet_value} dollars in your wallet.")
+    print_text(f"You have {wallet_value} dollars in your wallet.")
     return wallet_value
 
 
@@ -95,11 +96,12 @@ def ask_bet(wallet_value):
 
 def win_lose_check(bet, player_cards, player_hand, wallet_value):
     status = ""
-    if lose_check(player_hand) and player_cards.count(11) > 0:
-        player_cards.pop(player_cards.index(11))
-        player_cards.append(1)
-        player_hand = player_hand - 10
-        print_text("After recalculation you have {player_hand} points")
+    if lose_check(player_hand):
+        for card in player_cards:
+            if card.value == 'A':
+                player_hand = player_hand - 10
+                print_text(f"After recalculation you have {player_hand} points")
+                break
 
     if win_check(player_hand):
         status = "Player wins!"
@@ -117,7 +119,7 @@ def dealers_turn(card_deck, dealer_cards, dealer_hand, player_hand, status):
         print_text("Dealer received")
         card_value = deal_card(card_deck, dealer_cards)
         dealer_hand += card_value
-        print_text("Dealer has {dealer_hand} points")
+        print_text(f"Dealer has {dealer_hand} points")
         if lose_check(dealer_hand):
             status = "Player wins!"
             break
@@ -137,7 +139,7 @@ def blackjack():
         play_game = input("Are you ready to play? Y/N? ").lower()
 
         if play_game == "y":
-            print_text("You have {wallet_value} dollars in your wallet.")
+            print_text(f"You have {wallet_value} dollars in your wallet.")
 
             bet = int(ask_bet(wallet_value))
             player_hand = 0
@@ -145,15 +147,13 @@ def blackjack():
             player_cards = []
             dealer_cards = []
             status = ""
-            print(f"You received")
-            sleep(0.5)
 
             print_text("You received")
             card_value = deal_card(card_deck, player_cards)
             player_hand += card_value
             card_value = deal_card(card_deck, player_cards)
             player_hand += card_value
-            print_text("You have {player_hand} points")
+            print_text(f"You have {player_hand} points")
 
             print_text("Dealer has")
             card_value = deal_card(card_deck, dealer_cards)
@@ -173,7 +173,7 @@ def blackjack():
                     print_text("You received")
                     card_value = deal_card(card_deck, player_cards)
                     player_hand += card_value
-                    print_text("You have {player_hand} points")
+                    print_text(f"You have {player_hand} points")
 
                     player_hand, wallet_value, status = win_lose_check(bet, player_cards, player_hand, wallet_value)
                     if status != "":
@@ -183,13 +183,13 @@ def blackjack():
                     print_text("Dealer received")
                     print_card(dealer_cards[0])
                     print_card(dealer_cards[1])
-                    print_text("Dealer has {dealer_hand} points")
+                    print_text(f"Dealer has {dealer_hand} points")
 
                     status = ""
                     if dealer_hand > player_hand or win_check(dealer_hand):
                         status = "Dealer wins"
 
-                    if status != "":
+                    if status == "":
                         dealer_hand, status = dealers_turn(card_deck, dealer_cards, dealer_hand, player_hand, status)
 
                     if status == "Dealer wins":
