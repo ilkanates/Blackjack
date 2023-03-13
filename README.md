@@ -11,12 +11,14 @@ The dealer will continue to take cards until their hand exceeds 16 points.
 If the dealer's hand exceeds 21 points, the player wins the game.
 If the dealer's hand is between 17 and 21 points, the player's hand is compared to the dealer's hand, and the higher hand wins.
 If the player's hand is equal to the dealer's hand, the game is a draw.
+
 How to run
 Install Python 3.7 or higher
 Clone or download the repository
 Open the command line or terminal and navigate to the project directory
 Run the command python blackjack.py to start the game
 Follow the on-screen prompts to play the game
+
 Dependencies
 This program requires the random and time modules in Python.
 
