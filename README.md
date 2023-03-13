@@ -27,4 +27,4 @@ License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 Credits
-This game was developed by [Your Name] as a personal project.
+This game was developed by Ilkan Ates as a personal project.
