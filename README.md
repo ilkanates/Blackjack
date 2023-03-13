@@ -23,13 +23,17 @@ Run the command python blackjack.py to start the game
 Follow the on-screen prompts to play the game
 
 -Dependencies-
+
 This program requires the random and time modules in Python.
 
 -Contributing-
+
 This project is open to contributions. Please feel free to submit issues and pull requests.
 
 -License-
+
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 -Credits-
+
 This game was developed by Ilkan Ates as a personal project.
